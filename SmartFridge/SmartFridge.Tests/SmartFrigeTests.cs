@@ -59,7 +59,39 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void Door_WhenEmptyFridge_ShowDisplay_EmptyMessageDisplayed()
+        public void Items_AddItems()
+        {
+            var fridge = new Fridge(_displayPrinter.Object);
+            fridge.SetCurrentDate("16/09/2022");
+
+            fridge.OpenDoor();
+            fridge.AddItem(name: "Peppers", expiry: "17/09/2022", condition: "sealed");
+            fridge.AddItem(name: "Tomatoes", expiry: "17/09/2022", condition: "sealed");
+            fridge.CloseDoor();
+
+            fridge.Items().Should().HaveCount(2);
+        }
+
+        [Test]
+        public void Items_RemoveItems()
+        {
+            var fridge = new Fridge(_displayPrinter.Object);
+            fridge.SetCurrentDate("16/09/2022");
+
+            fridge.OpenDoor();
+            fridge.AddItem(name: "Peppers", expiry: "17/09/2022", condition: "sealed");
+            fridge.AddItem(name: "Tomatoes", expiry: "17/09/2022", condition: "sealed");
+            fridge.CloseDoor();
+
+            fridge.OpenDoor();
+            fridge.RemoveItem(name: "Peppers");
+            fridge.CloseDoor();
+
+            fridge.Items().Should().HaveCount(1);
+        }
+
+        [Test]
+        public void Display_WhenEmptyFridge_ShowEmptyMessage()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -70,7 +102,7 @@ namespace SmartFridge.Tests
 
 
         [Test]
-        public void Items_WhenAddItem_DisplayShowsItem()
+        public void Display_WhenAddItemNotExpired_ShowsItem()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -85,8 +117,13 @@ namespace SmartFridge.Tests
             _displayPrinter.Verify(display => display.Print("Peppers: 1 days remaining"));
         }
 
-        //Open door decrease expiry
-        //Display expired items
-        //If door is closed can not add item
+        // Item is expired
+        // Display expired item
+        // Open door degrade items
+        // Several door openings get items to expire
+        // Display expired items
+
+        // Optional:
+        // Exceptions thrown: remove item not found, add item when door is closed
     }
 }

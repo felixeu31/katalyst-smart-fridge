@@ -5,7 +5,7 @@ public class Fridge
     private readonly IPrinter _printer;
     private DateTime? _currentDate;
     private bool _isDoorOpen = false;
-    private List<Item> _items = new List<Item>();
+    private readonly List<Item> _items = new List<Item>();
 
     public Fridge(IPrinter printer)
     {
@@ -73,5 +73,20 @@ public class Fridge
         var item = Item.CreateNew(name: "Peppers", expiry: "17/09/2022", condition: "sealed");
 
         _items.Add(item);
+    }
+
+    public IReadOnlyCollection<Item> Items()
+    {
+        return _items as IReadOnlyCollection<Item>;
+    }
+
+    public void RemoveItem(string name)
+    {
+        var item = _items.FirstOrDefault(x => x.Name().Equals(name, StringComparison.OrdinalIgnoreCase));
+
+        if (item == null)
+            throw new Exception("Item not found");
+
+        _items.Remove(item);
     }
 }
