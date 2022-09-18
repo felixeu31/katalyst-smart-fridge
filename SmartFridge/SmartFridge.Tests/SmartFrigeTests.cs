@@ -13,7 +13,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void WhenSetupDate_FridgeDateIsUpdated()
+        public void CurrentDate_WhenSetupDate_FridgeDateIsUpdated()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -25,7 +25,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void WhenSimulateDayOver_OneDayIsAdded()
+        public void CurrentDate_WhenSimulateDayOver_OneDayIsAdded()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -38,7 +38,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void WhenOpenFridge_FridgeIsOpen()
+        public void Door_WhenOpenFridge_FridgeIsOpen()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -48,7 +48,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void WhenCloseFridge_FridgeIsClose()
+        public void Door_WhenCloseFridge_FridgeIsClose()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -59,7 +59,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void WhenEmptyFridge_ShowDisplay_EmptyMessageDisplayed()
+        public void Door_WhenEmptyFridge_ShowDisplay_EmptyMessageDisplayed()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -70,7 +70,7 @@ namespace SmartFridge.Tests
 
 
         [Test]
-        public void WhenAddItem_DisplayShowsItem()
+        public void Items_WhenAddItem_DisplayShowsItem()
         {
             var fridge = new Fridge(_displayPrinter.Object);
 
@@ -85,10 +85,8 @@ namespace SmartFridge.Tests
             _displayPrinter.Verify(display => display.Print("Peppers: 1 days remaining"));
         }
 
-        //If door is closed can not add item
-
-        //Display expired items
-
         //Open door decrease expiry
+        //Display expired items
+        //If door is closed can not add item
     }
 }

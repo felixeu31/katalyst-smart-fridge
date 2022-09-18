@@ -2,15 +2,15 @@ namespace SmartFridge.Model;
 
 public class Item
 {
-    private readonly string _name;
-    private readonly DateTime _expiry;
-    private readonly string _condition;
+    private string _name;
+    private DateTime _expiry;
+    private ItemCondition _itemCondition;
 
     private Item(string name, string expiry, string condition)
     {
         _name = name;
         _expiry = Convert.ToDateTime(expiry);
-        _condition = condition;
+        _itemCondition = ItemCondition.FromLiteral(condition);
     }
 
     public static Item CreateNew(string name, string expiry, string condition)
@@ -26,5 +26,15 @@ public class Item
     public double CalculateRemainingDays(DateTime? currentDate)
     {
         return (_expiry.Date - currentDate.Value.Date).TotalDays;
+    }
+
+    public DateTime Expiry()
+    {
+        return _expiry;
+    }
+
+    public void Degrade()
+    {
+        _expiry = _expiry.AddHours(- _itemCondition.DegradationTime);
     }
 }
