@@ -2,7 +2,7 @@ using SmartFridge.Model;
 
 namespace SmartFridge.Tests
 {
-    public class SmartFrigeTests
+    public class FrigeShould
     {
         private Mock<IPrinter> _displayPrinter;
 

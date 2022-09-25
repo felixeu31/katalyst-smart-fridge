@@ -2,7 +2,7 @@ using SmartFridge.Model;
 
 namespace SmartFridge.Tests
 {
-    public class ItemTests
+    public class ItemShould
     {
 
         [SetUp]
@@ -11,7 +11,7 @@ namespace SmartFridge.Tests
         }
 
         [Test]
-        public void Create()
+        public void CreateSuccessfully()
         {
             var item = Item.CreateNew("Peppers", "20/09/2022", "sealed");
 

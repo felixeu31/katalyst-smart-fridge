@@ -82,7 +82,7 @@ public class Fridge
 
     public void RemoveItem(string name)
     {
-        var item = _items.FirstOrDefault(x => x.Name().Equals(name, StringComparison.OrdinalIgnoreCase));
+        var item = _items.FirstOrDefault(x => x.Name().ToString().Equals(name, StringComparison.OrdinalIgnoreCase));
 
         if (item == null)
             throw new Exception("Item not found");

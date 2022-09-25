@@ -2,13 +2,13 @@ namespace SmartFridge.Model;
 
 public class Item
 {
-    private string _name;
+    private ItemName _name;
     private DateTime _expiry;
     private ItemCondition _itemCondition;
 
     private Item(string name, string expiry, string condition)
     {
-        _name = name;
+        _name = ItemName.FromString(name);
         _expiry = Convert.ToDateTime(expiry);
         _itemCondition = ItemCondition.FromLiteral(condition);
     }
@@ -18,7 +18,7 @@ public class Item
         return new Item(name, expiry, condition);
     }
 
-    public string Name()
+    public ItemName Name()
     {
         return _name;
     }

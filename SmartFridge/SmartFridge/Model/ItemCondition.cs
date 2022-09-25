@@ -48,6 +48,11 @@ public class ItemCondition
         return !(left == right);
     }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
 
     public static IReadOnlyCollection<ItemCondition>? Values => _itemConditions.Values as IReadOnlyCollection<ItemCondition>;
 }
