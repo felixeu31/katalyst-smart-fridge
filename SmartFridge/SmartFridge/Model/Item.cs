@@ -37,4 +37,9 @@ public class Item
     {
         _expiry = _expiry.AddHours(- _itemCondition.DegradationTime);
     }
+
+    public bool IsExpired(DateTime referenceDate)
+    {
+        return _expiry < referenceDate;
+    }
 }

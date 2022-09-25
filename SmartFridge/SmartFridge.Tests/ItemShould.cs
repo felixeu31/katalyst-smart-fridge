@@ -49,6 +49,17 @@ namespace SmartFridge.Tests
 
             totalHoursBetweenDates.Should().Be(5);
         }
+        
+        [Test]
+        public void BeExpiredWhenDateIsMinor()
+        {
+            var currentDate = new DateTime(2022, 9, 24);
 
+            var item = Item.CreateNew("Peppers", "23/09/2022", "opened");
+
+            var isExpired = item.IsExpired(referenceDate: currentDate);
+
+            isExpired.Should().BeTrue();
+        }
     }
 }

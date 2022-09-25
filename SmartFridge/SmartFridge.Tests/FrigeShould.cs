@@ -4,18 +4,18 @@ namespace SmartFridge.Tests
 {
     public class FrigeShould
     {
-        private Mock<IPrinter> _displayPrinter;
+        private Mock<IFridgeDisplayer> _fridgeDisplayerMock;
 
         [SetUp]
         public void Setup()
         {
-            _displayPrinter = new Mock<IPrinter>();
+            _fridgeDisplayerMock = new Mock<IFridgeDisplayer>();
         }
 
         [Test]
         public void CurrentDate_WhenSetupDate_FridgeDateIsUpdated()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
 
             fridge.SetCurrentDate("16/09/2022");
 
@@ -27,7 +27,7 @@ namespace SmartFridge.Tests
         [Test]
         public void CurrentDate_WhenSimulateDayOver_OneDayIsAdded()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
 
             fridge.SetCurrentDate("16/09/2022");
             fridge.SimulateDayOver();
@@ -40,7 +40,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Door_WhenOpenFridge_FridgeIsOpen()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
 
             fridge.OpenDoor();
 
@@ -50,7 +50,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Door_WhenCloseFridge_FridgeIsClose()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
 
             fridge.OpenDoor();
             fridge.CloseDoor();
@@ -61,7 +61,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Items_AddItems()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
             fridge.SetCurrentDate("16/09/2022");
 
             fridge.OpenDoor();
@@ -75,7 +75,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Items_RemoveItems()
         {
-            var fridge = new Fridge(_displayPrinter.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock.Object);
             fridge.SetCurrentDate("16/09/2022");
 
             fridge.OpenDoor();
@@ -90,35 +90,6 @@ namespace SmartFridge.Tests
             fridge.Items().Should().HaveCount(1);
         }
 
-        [Test]
-        public void Display_WhenEmptyFridge_ShowEmptyMessage()
-        {
-            var fridge = new Fridge(_displayPrinter.Object);
-
-            fridge.ShowDisplay();
-
-            _displayPrinter.Verify(display => display.Print("Fridge is empty"));
-        }
-
-
-        [Test]
-        public void Display_WhenAddItemNotExpired_ShowsItem()
-        {
-            var fridge = new Fridge(_displayPrinter.Object);
-
-            fridge.SetCurrentDate("16/09/2022");
-
-            fridge.OpenDoor();
-
-            fridge.AddItem(name: "Peppers", expiry: "17/09/2022", condition: "sealed");
-
-            fridge.ShowDisplay();
-
-            _displayPrinter.Verify(display => display.Print("Peppers: 1 days remaining"));
-        }
-
-        // Item is expired
-        // Display expired item
         // Open door degrade items
         // Several door openings get items to expire
         // Display expired items

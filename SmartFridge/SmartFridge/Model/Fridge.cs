@@ -2,14 +2,14 @@ namespace SmartFridge.Model;
 
 public class Fridge
 {
-    private readonly IPrinter _printer;
+    private readonly IFridgeDisplayer _fridgeDisplayer;
     private DateTime? _currentDate;
     private bool _isDoorOpen = false;
     private readonly List<Item> _items = new List<Item>();
 
-    public Fridge(IPrinter printer)
+    public Fridge(IFridgeDisplayer fridgeDisplayer)
     {
-        _printer = printer;
+        _fridgeDisplayer = fridgeDisplayer;
     }
 
     public void SetCurrentDate(string inputDate)
@@ -56,13 +56,7 @@ public class Fridge
 
     public void ShowDisplay()
     {
-        if(!_items.Any())
-            _printer.Print("Fridge is empty");
-
-        foreach (var item in _items)
-        {
-            _printer.Print($"{item.Name()}: {item.CalculateRemainingDays(_currentDate)} days remaining");
-        }
+        _fridgeDisplayer.ShowDisplay(Items(), CurrentDate());
     }
 
     public void AddItem(string name, string expiry, string condition)
