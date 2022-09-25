@@ -36,5 +36,21 @@ namespace SmartFridge.Tests
 
             _printerMock.Verify(display => display.Print("Peppers: 1 days remaining"));
         }
+
+
+        [Test]
+        public void DisplayOneExpiredItem()
+        {
+            var displayer = new FridgeDisplayer(_printerMock.Object);
+
+            var items = new List<Item>()
+            {
+                Item.CreateNew("Peppers", "29/09/2022", "opened")
+            };
+
+            displayer.ShowDisplay(items, new DateTime(2022, 9, 30));
+
+            _printerMock.Verify(display => display.Print("EXPIRED: Peppers"));
+        }
     }
 }

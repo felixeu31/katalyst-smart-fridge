@@ -21,9 +21,17 @@ namespace SmartFridge.Model
                 _printer.Print("Fridge is empty");
 
             foreach (var item in items)
+                DisplayItem(currentDate, item);
+        }
+
+        private void DisplayItem(DateTime currentDate, Item item)
+        {
+            if (item.IsExpired(currentDate))
             {
-                _printer.Print($"{item.Name()}: {item.CalculateRemainingDays(currentDate)} days remaining");
+                _printer.Print($"EXPIRED: {item.Name()}");
             }
+            else
+                _printer.Print($"{item.Name()}: {item.CalculateRemainingDays(currentDate)} days remaining");
         }
     }
 }
