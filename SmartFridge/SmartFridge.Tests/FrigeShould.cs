@@ -1,21 +1,22 @@
+using NSubstitute;
 using SmartFridge.Model;
 
 namespace SmartFridge.Tests
 {
     public class FrigeShould
     {
-        private Mock<IFridgeDisplayer> _fridgeDisplayerMock;
+        private IFridgeDisplayer _fridgeDisplayerMock;
 
         [SetUp]
         public void Setup()
         {
-            _fridgeDisplayerMock = new Mock<IFridgeDisplayer>();
+            _fridgeDisplayerMock = Substitute.For<IFridgeDisplayer>();
         }
 
         [Test]
         public void CurrentDate_WhenSetupDate_FridgeDateIsUpdated()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
 
             fridge.SetCurrentDate("16/09/2022");
 
@@ -27,7 +28,7 @@ namespace SmartFridge.Tests
         [Test]
         public void CurrentDate_WhenSimulateDayOver_OneDayIsAdded()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
 
             fridge.SetCurrentDate("16/09/2022");
             fridge.SimulateDayOver();
@@ -40,7 +41,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Door_WhenOpenFridge_FridgeIsOpen()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
 
             fridge.OpenDoor();
 
@@ -50,7 +51,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Door_WhenCloseFridge_FridgeIsClose()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
 
             fridge.OpenDoor();
             fridge.CloseDoor();
@@ -61,7 +62,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Items_AddItems()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
             fridge.SetCurrentDate("16/09/2022");
 
             fridge.OpenDoor();
@@ -75,7 +76,7 @@ namespace SmartFridge.Tests
         [Test]
         public void Items_RemoveItems()
         {
-            var fridge = new Fridge(_fridgeDisplayerMock.Object);
+            var fridge = new Fridge(_fridgeDisplayerMock);
             fridge.SetCurrentDate("16/09/2022");
 
             fridge.OpenDoor();
